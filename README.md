@@ -1,40 +1,53 @@
 # StudyNest 📚
 
 **StudyNest** is a full-stack web application designed for students and learners to **search, read, download, and upload study materials** like notes, roadmaps, and practice questions in PDF format. It features **user authentication**, a **search-based system**, **reviews & ratings**, and a **separate admin panel** for moderation.
-
----
-
 ## 🚀 Features
 
 ### User Features
-- User registration and login with **email/password** or **Google OAuth**.
 - Search for study materials by keyword (e.g., "JavaScript Notes").
 - Filter results by:
   - Highest Rating  
   - Most Downloaded  
-  - Recently Added
-- Upload study materials (PDF) with:
   - Optional poster image  
   - Description  
-  - Auto-fill username  
-  - Subject selection
-- Rate and review study materials.
-- Report any note for spam, low quality, or errors.
-
 ### Admin Panel
-- Separate dashboard for admins.
 - Manage users (block, delete, update).
 - Approve/reject uploaded notes.
-- Delete or handle reported notes.
-- View analytics: top contributors, trending notes, most downloaded.
+**Project Structure**
 
----
-
-## 🎯 Purpose
-StudyNest aims to **help learners find organized, reliable study resources** and allows students to **contribute their own content**. By combining search, ratings, and admin moderation, it ensures a safe and useful learning environment.
-
----
-
+StudyNest/
+├── backend/                 # Backend code
+│   ├── controllers/         # Logic for APIs (Notes, Users, Reports)
+│   ├── models/              # Database models (User, Note, Review, Report)
+│   ├── routes/              # API routes
+│   ├── middleware/          # Authentication & error handling
+│   ├── utils/               # Helper functions (e.g., file upload, email)
+│   └── server.js            # Main server file
+│
+├── frontend/                # Main Website for users
+│   ├── public/              # Static assets (images, favicon)
+│   ├── src/
+│   │   ├── components/      # Reusable UI components (Navbar, Card, Footer)
+│   │   ├── pages/           # Pages (Home, About, Contact, Notes, Roadmaps)
+│   │   ├── context/         # React context for global state
+│   │   ├── services/        # API service calls
+  │   │   └── App.jsx          # Main App entry
+│   └── index.html
+│
+├── admin-panel/             # Admin Dashboard (Separate UI)
+│   ├── public/
+│   ├── src/
+│   │   ├── components/      # Admin components (UserList, ReportList)
+│   │   ├── pages/           # Admin pages (Dashboard, Analytics, Notes Management)
+│   │   └── App.jsx
+│   └── index.html
+│
+├── README.md                # Project overview (polished for GitHub)
+├── .gitignore               # Files/folders to ignore (node_modules, .env)
+├── package.json             # Node.js dependencies for backend/frontend/admin
+├── tailwind.config.js       # Tailwind CSS configuration
+├── vite.config.js           # Vite config for frontend & admin
+└── .env.example             # Sample environment variables file
 ## 💡 Importance for Resume
 - Demonstrates **full-stack development skills**.  
 - Includes **authentication**, **file uploads**, **role-based access**, and **search algorithms**.  
@@ -79,86 +92,58 @@ EduHubX/
 │   └── server.js            # Main server file
 │
 ├── frontend/                # Main Website for users
-│   ├── public/              # Static assets (images, favicon)
-│   ├── src/
-│   │   ├── components/      # Reusable UI components (Navbar, Card, Footer)
-│   │   ├── pages/           # Pages (Home, About, Contact, Notes, Roadmaps)
-│   │   ├── context/         # React context for global state
-│   │   ├── services/        # API service calls
-│   │   └── App.jsx          # Main App entry
-│   └── index.html
-│
-├── admin-panel/             # Admin Dashboard (Separate UI)
-│   ├── public/
-│   ├── src/
-│   │   ├── components/      # Admin components (UserList, ReportList)
-│   │   ├── pages/           # Admin pages (Dashboard, Analytics, Notes Management)
-│   │   └── App.jsx
-│   └── index.html
-│
-├── README.md                # Project overview (polished for GitHub)
-├── .gitignore               # Files/folders to ignore (node_modules, .env)
-├── package.json             # Node.js dependencies for backend/frontend/admin
-├── tailwind.config.js       # Tailwind CSS configuration
-├── vite.config.js           # Vite config for frontend & admin
-└── .env.example             # Sample environment variables file
 
+# EduHubX / StudyNest
 
+A front-end React + Vite project (Study materials sharing app). This repository contains the client-side code and assets for the EduHubX / StudyNest app.
 
+Overview
+- Purpose: Provide a clean UX for searching, reading and sharing study resources (PDFs, notes, roadmaps).
+- Status: Frontend with Vite and React. (If you plan to add backend or admin UI, place them at the repository root as separate folders.)
 
----
+Quick Links
+- Project structure (styled): `docs/project-structure.html`
 
-## 📄 Summary
-**StudyNest** is a modern, full-stack study platform where students can **find, upload, and share educational resources**. It provides **powerful search**, **filtering**, **ratings/reviews**, and **admin moderation**, making it an **ideal project for portfolios and resumes**.
+Getting started
+1. Install dependencies:
 
----
-
-## 📌 How to Run
-Frontend
-cd frontend
+```
 npm install
+```
+
+2. Run the development server:
+
+```
 npm run dev
+```
 
-Admin Panel
-cd admin-panel
-npm install
-npm run dev
+Project layout (top-level)
 
-### Backend
-```bash
-cd backend
+```
+EduHubX/
+├─ index.html
+├─ package.json
+├─ vite.config.js
+├─ public/
+└─ src/
+   ├─ App.jsx
+   ├─ main.jsx
+   ├─ index.css
+   └─ assets/
+```
 
+Notes & recommendations
+- If you add backend code, add a `backend/` folder with its own `package.json`.
+- Use the `docs/` folder for lightweight documentation or GitHub Pages (the `docs/project-structure.html` file added shows the current layout).
 
-📚 Future Enhancements
+Contributing
+- Open issues or PRs for improvements. Keep changes focused and add tests where appropriate.
 
-Dark/Light mode
-
-Recommendation system based on user activity
-
-Personal "Favorites" for saved notes
-
-Analytics dashboard for users and admins
-
-Weekly trending notes
-
-🔗 Demo
-
-(Optional: Add live demo link here if hosted)
-
-✨ Author
-
-Your Name - Full-Stack Developer
-
-GitHub: [your-github-link]
-
-LinkedIn: [your-linkedin-link]
-
+License
+- Add a `LICENSE` file if you want to specify a license.
 
 ---
 
-If you want, I can also **make an even shorter, GitHub-ready version** that looks **clean and attractive with badges for tech stack and features** — perfect for recruiters to glance at quickly.  
-
-Do you want me to do that?
-
-
-npm run dev
+If you'd like, I can also:
+- Add a `.gitignore` suitable for Node/Vite projects.
+- Create a compact README badge header and a short one-page README for recruiters.

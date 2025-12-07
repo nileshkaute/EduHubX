@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project Structure — EduHubX</title>
+  <style>
+    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#f7fafc; color:#0f172a; padding:24px; }
+    .card { background:#fff; border-radius:12px; padding:20px; box-shadow:0 6px 18px rgba(15,23,42,0.06); max-width:900px; margin:0 auto; }
+    h1 { margin:0 0 8px; font-size:20px; }
+    p.lead { margin:0 0 18px; color:#475569; }
+    .tree { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace; font-size:14px; }
+    .node { white-space:nowrap; }
+    .folder { color:#0f172a; font-weight:600; }
+    .file { color:#334155; }
+    .muted { color:#94a3b8; }
+    pre { background:#0b1220; color:#e6eef8; padding:12px; border-radius:8px; overflow:auto; }
+    .note { margin-top:14px; color:#475569; font-size:13px }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>EduHubX — Project Structure</h1>
+    <p class="lead">A concise, human-friendly view of the repository layout. Use this as a reference when navigating the codebase.</p>
+
+    <div class="tree">
+      <pre>
+EduHubX/
+├── eslint.config.js            <span class="muted"># ESLint configuration</span>
+├── index.html                  <span class="muted"># Vite app entry</span>
+├── package.json                <span class="muted"># Project dependencies & scripts</span>
+├── README.md                   <span class="muted"># Project overview (this file)</span>
+├── vite.config.js              <span class="muted"># Vite config</span>
+├── public/                     <span class="muted"># Static assets served by Vite</span>
+└── src/
+    ├── App.jsx
+    ├── index.css
+    ├── main.jsx
+    └── assets/                  <span class="muted"># images and other static files</span>
+      └── ...
+      </pre>
+    </div>
+
+    <p class="note">Tip: This project appears to be a front-end app built with React + Vite. If you plan to add backend or admin-panel folders, add them at the repository root so the structure remains consistent.</p>
+    <p class="note">You can link this page from the top of your `README.md` for a nicer visual in the repo or host it via GitHub Pages from the `docs/` folder.</p>
+  </div>
+</body>
+</html>

@@ -69,7 +69,7 @@ StudyNest aims to **help learners find organized, reliable study resources** and
 ---
 
 ## 📁 Folder Structure (Suggested)
-StudyNest/
+EduHubX/
 ├── backend/                 # Backend code
 │   ├── controllers/         # Logic for APIs (Notes, Users, Reports)
 │   ├── models/              # Database models (User, Note, Review, Report)

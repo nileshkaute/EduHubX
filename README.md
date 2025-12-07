@@ -1,172 +1,147 @@
-📚 StudyNest – A Modern Study Material Sharing Platform
+# StudyNest 📚
 
-StudyNest is a full-stack learning platform where students can search, read, download, and upload study materials such as notes, PDFs, roadmaps, and practice questions.
-It features smart search, ratings, reviews, Google authentication, and a separate admin dashboard for content moderation.
+**StudyNest** is a full-stack web application designed for students and learners to **search, read, download, and upload study materials** like notes, roadmaps, and practice questions in PDF format. It features **user authentication**, a **search-based system**, **reviews & ratings**, and a **separate admin panel** for moderation.
+## 🚀 Features
 
-This project is a part of EduHubX, focused on helping students access quality learning resources easily.
-
-🚀 Features
-🧑‍🎓 User Features
-
-🔍 Search study materials (e.g., “JavaScript Notes”)
-
-🏷️ Categories: Notes, Roadmaps, Practice Questions
-
-⭐ Filter by:
-
-Highest Rating
-
-Most Downloaded
-
-Latest Uploaded
-
-📄 Upload PDF notes with:
-
-Title
-
-Subject
-
-Description
-
-Optional poster image
-
-💬 Give reviews & ratings
-
-⚠️ Report incorrect or duplicate notes
-
-🔐 Authentication:
-
-Email/password signup
-
-Google Sign-In
-
-🛡️ Admin Panel
-
-A completely separate interface where admins can:
-
-👥 Manage users
-
-📝 Approve/reject uploaded notes
-
-🚫 Remove spam or duplicate content
-
-📩 View reported notes
-
-Prject Strucre:-
-
+### User Features
+- Search for study materials by keyword (e.g., "JavaScript Notes").
+- Filter results by:
+  - Highest Rating  
+  - Most Downloaded  
+  - Optional poster image  
+  - Description  
+### Admin Panel
+- Manage users (block, delete, update).
+- Approve/reject uploaded notes.
+**Project Structure**
+```
 StudyNest/
-├── backend/                     # Backend (Node + Express)
-│   ├── controllers/             # Notes, users, reports logic
-│   ├── models/                  # MongoDB/Mongoose models
-│   ├── routes/                  # API endpoints
-│   ├── middleware/              # Auth, error handling
-│   ├── utils/                   # File upload, email, helpers
-│   └── server.js                # Backend entry file
+├── backend/                 # Backend code
+│   ├── controllers/         # Logic for APIs (Notes, Users, Reports)
+│   ├── models/              # Database models (User, Note, Review, Report)
+│   ├── routes/              # API routes
+│   ├── middleware/          # Authentication & error handling
+│   ├── utils/               # Helper functions (e.g., file upload, email)
+│   └── server.js            # Main server file
 │
-├── frontend/                    # User-facing website (React + Vite)
+├── frontend/                # Main Website for users
+│   ├── public/              # Static assets (images, favicon)
+│   ├── src/
+│   │   ├── components/      # Reusable UI components (Navbar, Card, Footer)
+│   │   ├── pages/           # Pages (Home, About, Contact, Notes, Roadmaps)
+│   │   ├── context/         # React context for global state
+│   │   ├── services/        # API service calls
+│   │   └── App.jsx          # Main App entry
+│   └── index.html
+│
+├── admin-panel/             # Admin Dashboard (Separate UI)
 │   ├── public/
-│   └── src/
-│       ├── components/          # Navbar, Cards, Filters
-│       ├── pages/               # Home, Notes, Roadmaps, Contact
-│       ├── context/             # Auth & Theme Context
-│       ├── services/            # API handlers (Axios)
-│       └── App.jsx
+│   ├── src/
+│   │   ├── components/      # Admin components (UserList, ReportList)
+│   │   ├── pages/           # Admin pages (Dashboard, Analytics, Notes Management)
+│   │   └── App.jsx
+│   └── index.html
 │
-├── admin-panel/                 # Separate admin dashboard
-│   ├── public/
-│   └── src/
-│       ├── components/          # Admin-only components
-│       ├── pages/               # Dashboard, Reports, Users
-│       └── App.jsx
+├── README.md                # Project overview (polished for GitHub)
+├── .gitignore               # Files/folders to ignore (node_modules, .env)
+├── package.json             # Node.js dependencies for backend/frontend/admin
+├── tailwind.config.js       # Tailwind CSS configuration
+├── vite.config.js           # Vite config for frontend & admin
+└── .env.example             # Sample environment variables file
+## 💡 Importance for Resume
+- Demonstrates **full-stack development skills**.  
+- Includes **authentication**, **file uploads**, **role-based access**, and **search algorithms**.  
+- Shows ability to build **production-ready applications**.  
+- Highlights **frontend, backend, and database integration skills**.
+```
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React + Vite (fast and modern UI)
+- Tailwind CSS (responsive design)
+- Framer Motion (animations)
+- Axios / Fetch API (backend communication)
+- React Router DOM (multi-page navigation)
+
+### Backend
+- Node.js + Express.js (server & APIs)
+- JWT Authentication for secure login
+- Google OAuth for social login
+- Multer for PDF and image uploads
+
+### Database
+- MongoDB (NoSQL, flexible document storage)  
+  **OR**  
+- MySQL (Structured relational storage)
+
+### Optional
+- Cloudinary / AWS S3 for storing PDFs and poster images
+
+---
+
+## 📁 Folder Structure (Suggested)
+```
+EduHubX/
+├── backend/                 # Backend code
+│   ├── controllers/         # Logic for APIs (Notes, Users, Reports)
+│   ├── models/              # Database models (User, Note, Review, Report)
+│   ├── routes/              # API routes
+│   ├── middleware/          # Authentication & error handling
+│   ├── utils/               # Helper functions (e.g., file upload, email)
+│   └── server.js            # Main server file
 │
-├── README.md                    # Project documentation
-├── package.json                 # Dependencies (workspace level)
-├── .gitignore                   # Ignored files
-├── vite.config.js               # Vite config
-└── .env.example                 # Example environment variables
+├── frontend/                # Main Website for users
+```
+# EduHubX / StudyNest
 
+A front-end React + Vite project (Study materials sharing app). This repository contains the client-side code and assets for the EduHubX / StudyNest app.
 
+Overview
+- Purpose: Provide a clean UX for searching, reading and sharing study resources (PDFs, notes, roadmaps).
+- Status: Frontend with Vite and React. (If you plan to add backend or admin UI, place them at the repository root as separate folders.)
 
-🧩 Tech Stack
-🌐 Frontend
+Quick Links
+- Project structure (styled): `docs/project-structure.html`
 
-React + Vite
+Getting started
+1. Install dependencies:
 
-Tailwind CSS
-
-Framer Motion
-
-React Router DOM
-
-Axios
-
-🖥️ Backend
-
-Node.js
-
-Express.js
-
-JWT Authentication
-
-Google OAuth 2.0
-
-Multer (PDF/image upload)
-
-🗂️ Database
-
-MongoDB (Recommended)
-
-OR MySQL (alternative with Prisma/Sequelize)
-
-☁️ Cloud Storage (Optional)
-
-Cloudinary
-
-AWS S3
-
-
-🛠️ Installation & Setup
-1️⃣ Clone the repository
-git clone https://github.com/your-username/StudyNest.git
-cd StudyNest
-
-
-2️⃣ Install dependencies
+```
 npm install
+```
 
-3️⃣ Backend environment variables
-Create .env inside /backend:
+2. Run the development server:
 
-MONGO_URI=your_mongodb_url
-JWT_SECRET=your_secret_key
-GOOGLE_CLIENT_ID=your_google_id
-CLOUDINARY_API_KEY=your_key
-
-4️⃣ Run backend
-cd backend
+```
 npm run dev
+```
 
-5️⃣ Run frontend
-cd frontend
-npm run dev
+Project layout (top-level)
 
-6️⃣ Run admin panel
-cd admin-panel
-npm run dev
+```
+EduHubX/
+├─ index.html
+├─ package.json
+├─ vite.config.js
+├─ public/
+└─ src/
+   ├─ App.jsx
+   ├─ main.jsx
+   ├─ index.css
+   └─ assets/
+```
 
-📈 Future Enhancements
+Notes & recommendations
+- If you add backend code, add a `backend/` folder with its own `package.json`.
+- Use the `docs/` folder for lightweight documentation or GitHub Pages (the `docs/project-structure.html` file added shows the current layout).
 
-🔖 Bookmark feature
+Contributing
+- Open issues or PRs for improvements. Keep changes focused and add tests where appropriate.
 
-🧭 AI-based study recommendations
+License
+- Add a `LICENSE` file if you want to specify a license.
 
-📚 Create “Study Groups”
 
-🖼 PDF preview inside browser
 
-🧵 Discussion threads under each note
-
-❤️ Credits
-
-Built with love using React, Node.js, Tailwind, and MongoDB.
-Part of the EduHubX student learning project.

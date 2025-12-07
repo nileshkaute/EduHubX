@@ -48,12 +48,14 @@ StudyNest/
 ├── tailwind.config.js       # Tailwind CSS configuration
 ├── vite.config.js           # Vite config for frontend & admin
 └── .env.example             # Sample environment variables file
+
+```
+
 ## 💡 Importance for Resume
 - Demonstrates **full-stack development skills**.  
 - Includes **authentication**, **file uploads**, **role-based access**, and **search algorithms**.  
 - Shows ability to build **production-ready applications**.  
 - Highlights **frontend, backend, and database integration skills**.
-```
 ---
 
 ## 🛠️ Tech Stack

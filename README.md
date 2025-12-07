@@ -70,23 +70,39 @@ StudyNest aims to **help learners find organized, reliable study resources** and
 
 ## 📁 Folder Structure (Suggested)
 StudyNest/
-├── backend/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── middleware/
-│ └── server.js
-├── frontend/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── pages/
-│ │ ├── context/
-│ │ └── App.jsx
-│ └── index.html
-├── admin-panel/
-│ └── src/
-├── README.md
-└── package.json
+├── backend/                 # Backend code
+│   ├── controllers/         # Logic for APIs (Notes, Users, Reports)
+│   ├── models/              # Database models (User, Note, Review, Report)
+│   ├── routes/              # API routes
+│   ├── middleware/          # Authentication & error handling
+│   ├── utils/               # Helper functions (e.g., file upload, email)
+│   └── server.js            # Main server file
+│
+├── frontend/                # Main Website for users
+│   ├── public/              # Static assets (images, favicon)
+│   ├── src/
+│   │   ├── components/      # Reusable UI components (Navbar, Card, Footer)
+│   │   ├── pages/           # Pages (Home, About, Contact, Notes, Roadmaps)
+│   │   ├── context/         # React context for global state
+│   │   ├── services/        # API service calls
+│   │   └── App.jsx          # Main App entry
+│   └── index.html
+│
+├── admin-panel/             # Admin Dashboard (Separate UI)
+│   ├── public/
+│   ├── src/
+│   │   ├── components/      # Admin components (UserList, ReportList)
+│   │   ├── pages/           # Admin pages (Dashboard, Analytics, Notes Management)
+│   │   └── App.jsx
+│   └── index.html
+│
+├── README.md                # Project overview (polished for GitHub)
+├── .gitignore               # Files/folders to ignore (node_modules, .env)
+├── package.json             # Node.js dependencies for backend/frontend/admin
+├── tailwind.config.js       # Tailwind CSS configuration
+├── vite.config.js           # Vite config for frontend & admin
+└── .env.example             # Sample environment variables file
+
 
 
 

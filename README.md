@@ -31,7 +31,7 @@ StudyNest/
 │   │   ├── pages/           # Pages (Home, About, Contact, Notes, Roadmaps)
 │   │   ├── context/         # React context for global state
 │   │   ├── services/        # API service calls
-  │   │   └── App.jsx          # Main App entry
+│   │   └── App.jsx          # Main App entry
 │   └── index.html
 │
 ├── admin-panel/             # Admin Dashboard (Separate UI)
@@ -142,8 +142,5 @@ Contributing
 License
 - Add a `LICENSE` file if you want to specify a license.
 
----
 
-If you'd like, I can also:
-- Add a `.gitignore` suitable for Node/Vite projects.
-- Create a compact README badge header and a short one-page README for recruiters.
+

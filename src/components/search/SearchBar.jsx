@@ -3,10 +3,21 @@ import { SearchContext } from '../../context/SearchContext'
 
 const SearchBar = () => {
   const { query, setQuery } = useContext(SearchContext)
+  const [localQuery, setLocalQuery] = React.useState(query)
+
+  React.useEffect(() => {
+    const handler = setTimeout(() => {
+      setQuery(localQuery)
+    }, 500) // 500ms debounce
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [localQuery, setQuery])
 
   const handleSearch = (e) => {
     e.preventDefault()
-    // Additional logic if needed, e.g., redirect to home if not there
+    // Additional logic if needed
   }
 
   return (
@@ -15,8 +26,8 @@ const SearchBar = () => {
         <input
           type="text"
           placeholder="Search Notes, Roadmaps, Questions..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={localQuery}
+          onChange={(e) => setLocalQuery(e.target.value)}
           className="w-full px-4 py-2 pl-10 bg-gray-100 rounded-lg text-gray-900 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
         />
         <svg

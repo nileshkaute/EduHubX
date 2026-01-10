@@ -4,6 +4,7 @@ import Navbar from './components/navbar/Navbar'
 import { SearchProvider } from './context/SearchContext'
 import Home from './pages/Home'
 import Notes from './pages/Notes'
+import AddNote from './pages/AddNote'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -17,6 +18,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/notes" element={<Notes />} />
+              <Route path="/add-note" element={<AddNote />} />
             </Routes>
           </main>
           

@@ -5,6 +5,7 @@ const NavLinks = () => {
   const links = [
     { path: '/', label: 'Home' },
     { path: '/notes', label: 'Notes' },
+    { path: '/add-note', label: 'Upload' },
     { path: '#roadmaps', label: 'Roadmaps' },
     { path: '#practice', label: 'Practice' },
   ]

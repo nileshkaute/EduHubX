@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Logo from './Logo'
-import SearchBar from './SearchBar'
+import SearchBar from '../search/SearchBar'
 import NavLinks from './NavLinks'
 import FilterDropdown from './FilterDropdown'
 import UserMenu from './UserMenu'

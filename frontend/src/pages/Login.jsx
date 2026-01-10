@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { GoogleLogin } from '@react-oauth/google';
 
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { login, loginWithGoogle } = useAuth()
+  const { login, googleLogin } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -23,11 +24,11 @@ const Login = () => {
     setLoading(false)
   }
 
-  const handleGoogleLogin = async () => {
+  const handleGoogleSuccess = async (credentialResponse) => {
     try {
       setError('')
       setLoading(true)
-      await loginWithGoogle()
+      await googleLogin(credentialResponse)
       navigate('/')
     } catch (err) {
       setError('Failed to log in with Google: ' + err.message)
@@ -94,17 +95,13 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="mt-6">
-            <button
-              onClick={handleGoogleLogin}
-              disabled={loading}
-              className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-            >
-              <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12.545,10.239v3.821h5.445c-0.712,2.335-3.438,3.821-5.445,3.821c-3.283,0-5.954-2.605-5.954-5.969c0-3.315,2.67-5.969,5.954-5.969c1.49,0,2.83,0.518,3.887,1.363l2.817-2.88C6.18,1.725,9.22,0.669,12.545,0.669c6.61,0,12,5.346,12,12c0,1.07-0.126,2.115-0.354,3.125h-11.646V10.239z"/>
-              </svg>
-              Google
-            </button>
+          <div className="mt-6 flex justify-center">
+             <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => {
+                  setError('Google Login Failed');
+                }}
+              />
           </div>
         </div>
 

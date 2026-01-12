@@ -10,6 +10,8 @@ import AddNote from './pages/AddNote'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 
+import ProtectedRoute from './components/ProtectedRoute'
+
 const App = () => {
   return (
     <GoogleOAuthProvider clientId="523746386708-b5rs3ihb87e7g5qlgvb9hlh99mev96bn.apps.googleusercontent.com">
@@ -22,7 +24,14 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/notes" element={<Notes />} />
-                  <Route path="/add-note" element={<AddNote />} />
+                  <Route 
+                    path="/add-note" 
+                    element={
+                      <ProtectedRoute>
+                        <AddNote />
+                      </ProtectedRoute>
+                    } 
+                  />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<Signup />} />
                 </Routes>

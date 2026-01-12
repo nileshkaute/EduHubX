@@ -33,8 +33,16 @@ const Navbar = () => {
               <div className="flex items-center space-x-3">
                  {/* Optional: User Avatar or Name */}
                  <span className="text-sm font-medium text-gray-700">
-                  {currentUser.email?.split('@')[0]}
+                  {currentUser.name || currentUser.email?.split('@')[0]}
                  </span>
+                {currentUser.role === 'admin' && (
+                  <Link
+                    to="/admin"
+                    className="px-3 py-1 rounded-md text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors"
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
                 <button
                   onClick={logout}
                   className="px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"

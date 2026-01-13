@@ -2,10 +2,12 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import Navbar from './components/navbar/Navbar'
+import Footer from './components/Footer'
 import { SearchProvider } from './context/SearchContext'
 import { AuthProvider } from './context/AuthContext'
 import Home from './pages/Home'
 import Notes from './pages/Notes'
+import NoteDetails from './pages/NoteDetails'
 import AddNote from './pages/AddNote'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -24,6 +26,7 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/notes" element={<Notes />} />
+                  <Route path="/notes/:id" element={<NoteDetails />} />
                   <Route 
                     path="/add-note" 
                     element={
@@ -36,6 +39,7 @@ const App = () => {
                   <Route path="/signup" element={<Signup />} />
                 </Routes>
               </main>
+              <Footer />
             </div>
           </Router>
         </SearchProvider>

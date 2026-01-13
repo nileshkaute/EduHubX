@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import SearchBar from '../search/SearchBar'
 import NavLinks from './NavLinks'
-import { useAuth } from '../../context/AuthContext'
+import UserMenu from './UserMenu'
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { currentUser, logout } = useAuth()
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -28,38 +27,8 @@ const Navbar = () => {
           <NavLinks />
 
           {/* User Menu / Auth Buttons */}
-          <div className="hidden md:flex items-center space-x-3 ml-4">
-            {currentUser ? (
-              <div className="flex items-center space-x-3">
-                 {/* Optional: User Avatar or Name */}
-                 <span className="text-sm font-medium text-gray-700">
-                  {currentUser.name || currentUser.email?.split('@')[0]}
-                 </span>
-                {currentUser.role === 'admin' && (
-                  <Link
-                    to="/admin"
-                    className="px-3 py-1 rounded-md text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors"
-                  >
-                    Admin Dashboard
-                  </Link>
-                )}
-                <button
-                  onClick={logout}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
-                >
-                  Log Out
-                </button>
-              </div>
-            ) : (
-              <>
-                <Link to="/login" className="px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors">
-                  Log In
-                </Link>
-                <Link to="/signup" className="px-4 py-2 rounded-full text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 shadow-sm hover:shadow transition-all">
-                  Sign Up
-                </Link>
-              </>
-            )}
+          <div className="ml-4">
+            <UserMenu />
           </div>
 
           {/* Mobile Menu Button */}

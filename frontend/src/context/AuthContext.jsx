@@ -83,12 +83,29 @@ export const AuthProvider = ({ children }) => {
     setCurrentUser(null);
   };
 
+  const updateProfile = async (profileData) => {
+    try {
+      const token = localStorage.getItem('token');
+      const { data } = await axios.put('http://localhost:5000/api/auth/profile', profileData, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      localStorage.setItem('user', JSON.stringify(data));
+      setCurrentUser(data);
+      return data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Profile update failed');
+    }
+  }
+
   const value = {
     currentUser,
     login,
     signup,
     googleLogin,
-    logout
+    logout,
+    updateProfile
   };
 
   return (

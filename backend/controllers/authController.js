@@ -125,4 +125,42 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { googleAuth, registerUser, loginUser };
+// @desc    Update user profile
+// @route   PUT /api/auth/profile
+// @access  Private
+const updateUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      user.photo = req.body.photo || user.photo;
+      user.bio = req.body.bio || user.bio;
+      user.education = req.body.education || user.education;
+
+      if (req.body.password) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(req.body.password, salt);
+      }
+
+      const updatedUser = await user.save();
+
+      res.json({
+        _id: updatedUser.id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        photo: updatedUser.photo,
+        bio: updatedUser.bio,
+        education: updatedUser.education,
+        token: generateToken(updatedUser._id),
+      });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+module.exports = { googleAuth, registerUser, loginUser, updateUserProfile };

@@ -26,6 +26,12 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    bio: {
+      type: String,
+    },
+    education: {
+      type: String,
+    },
   },
   {
     timestamps: true,

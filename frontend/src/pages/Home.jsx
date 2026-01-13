@@ -4,6 +4,7 @@ import SearchResults from '../components/search/SearchResults'
 import NoteCard from '../components/cards/NoteCard'
 import RoadmapCard from '../components/cards/RoadmapCard'
 import QuestionCard from '../components/cards/QuestionCard'
+import { Star, Map, MessageSquare, ArrowRight } from 'lucide-react'
 
 const Home = () => {
   const { query } = useContext(SearchContext)
@@ -38,7 +39,7 @@ const Home = () => {
              <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
                Master Your <span className="text-blue-600">Studies</span>
              </h1>
-             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+             <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium">
                Access top-tier notes, comprehensive roadmaps, and practice questions to ace your exams.
              </p>
           </section>
@@ -46,8 +47,13 @@ const Home = () => {
           {/* Top Notes Section */}
           <section>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Top Rated Notes</h2>
-              <button className="text-blue-600 font-semibold hover:text-blue-700">View All</button>
+              <div className="flex items-center gap-2">
+                <Star className="w-6 h-6 text-yellow-500 fill-current" />
+                <h2 className="text-2xl font-bold text-gray-800">Top Rated Notes</h2>
+              </div>
+              <button className="flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors group text-sm">
+                View All <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {topNotes.map(note => (
@@ -59,8 +65,13 @@ const Home = () => {
           {/* Roadmaps Section */}
           <section>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Learning Roadmaps</h2>
-              <button className="text-blue-600 font-semibold hover:text-blue-700">View All</button>
+              <div className="flex items-center gap-2">
+                <Map className="w-6 h-6 text-pink-500" />
+                <h2 className="text-2xl font-bold text-gray-800">Learning Roadmaps</h2>
+              </div>
+              <button className="flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors group text-sm">
+                View All <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {topRoadmaps.map(roadmap => (
@@ -72,8 +83,13 @@ const Home = () => {
           {/* Practice Questions Section */}
           <section>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">Recent Questions</h2>
-               <button className="text-blue-600 font-semibold hover:text-blue-700">View All</button>
+              <div className="flex items-center gap-2">
+                <MessageSquare className="w-6 h-6 text-blue-500" />
+                <h2 className="text-2xl font-bold text-gray-800">Recent Questions</h2>
+              </div>
+              <button className="flex items-center gap-1 text-blue-600 font-semibold hover:text-blue-700 transition-colors group text-sm">
+                View All <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
               {recentQuestions.map(question => (

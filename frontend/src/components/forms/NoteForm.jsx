@@ -1,7 +1,13 @@
 import React, { useState } from 'react'
 import FileInput from './FileInput'
+import { createNote } from '../../services/noteApi'
+import { useAuth } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const NoteForm = () => {
+  const { currentUser } = useAuth()
+  const navigate = useNavigate()
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formData, setFormData] = useState({
     title: '',
     subject: '',
@@ -19,11 +25,33 @@ const NoteForm = () => {
     setFormData(prev => ({ ...prev, [field]: file }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log('Form Submitted:', formData)
-    alert('Note uploaded successfully! (Mock)')
-    // Reset form or redirect
+    
+    if (!formData.file) {
+      alert("Please select a PDF file!")
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const data = new FormData()
+      data.append('title', formData.title)
+      data.append('subject', formData.subject)
+      data.append('description', formData.description)
+      data.append('pdf', formData.file)
+      if (formData.poster) {
+        data.append('poster', formData.poster)
+      }
+
+      await createNote(data)
+      alert('Note uploaded successfully!')
+      navigate('/notes')
+    } catch (error) {
+      alert(error.response?.data?.message || error.message || 'Upload failed')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -34,7 +62,7 @@ const NoteForm = () => {
         <label className="block text-sm font-medium text-gray-700">Uploaded By</label>
         <input 
           type="text" 
-          value="current_user (You)" 
+          value={currentUser?.name || "Anonymous"} 
           disabled 
           className="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-gray-500 sm:text-sm"
         />
@@ -114,9 +142,12 @@ const NoteForm = () => {
       <div className="pt-4">
         <button 
           type="submit" 
-          className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+          disabled={isSubmitting}
+          className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white transition-colors ${
+            isSubmitting ? 'bg-blue-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+          }`}
         >
-          Upload Note
+          {isSubmitting ? 'Uploading...' : 'Upload Note'}
         </button>
       </div>
 

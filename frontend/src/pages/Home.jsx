@@ -5,16 +5,27 @@ import NoteCard from '../components/cards/NoteCard'
 import RoadmapCard from '../components/cards/RoadmapCard'
 import QuestionCard from '../components/cards/QuestionCard'
 import { Star, Map, MessageSquare, ArrowRight } from 'lucide-react'
+import { fetchNotes } from '../services/noteApi'
 
 const Home = () => {
   const { query } = useContext(SearchContext)
+  const [topNotes, setTopNotes] = React.useState([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
-  // Mock Data
-  const topNotes = [
-    { id: 1, title: 'Complete ReactJS Guide 2024', subject: 'Web Dev', author: 'Nilesh', rating: 4.8, downloads: '1.2k' },
-    { id: 2, title: 'Data Structures & Algorithms', subject: 'CS Core', author: 'Rahul', rating: 4.9, downloads: '5k' },
-    { id: 3, title: 'Operating System Notes', subject: 'CS Core', author: 'Ankit', rating: 4.5, downloads: '800' },
-  ]
+  React.useEffect(() => {
+    const getNotes = async () => {
+      try {
+        const response = await fetchNotes()
+        // For "Top Rated", we'll just take the first 3 for now
+        setTopNotes(response.data.slice(0, 3))
+      } catch (error) {
+        console.error('Error fetching notes:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    getNotes()
+  }, [])
 
   const topRoadmaps = [
     { id: 1, title: 'Frontend Developer', description: 'Step by step guide to become a modern frontend developer.', steps: 12, colorFrom: 'from-pink-500', colorTo: 'to-rose-500' },

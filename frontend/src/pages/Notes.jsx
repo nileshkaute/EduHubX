@@ -4,25 +4,29 @@ import NoteCard from '../components/cards/NoteCard'
 import SortFilter from '../components/filters/SortFilter'
 import RatingFilter from '../components/filters/RatingFilter'
 import DownloadFilter from '../components/filters/DownloadFilter'
+import { fetchNotes } from '../services/noteApi'
 
 const Notes = () => {
   const { query } = useContext(SearchContext)
+  const [allNotes, setAllNotes] = React.useState([])
+  const [isLoading, setIsLoading] = React.useState(true)
 
-  // Mock Data (Expanded)
-  const allNotes = [
-    { id: 1, title: 'Complete ReactJS Guide 2024', subject: 'Web Dev', author: 'Nilesh', rating: 4.8, downloads: '1.2k' },
-    { id: 2, title: 'Data Structures & Algorithms', subject: 'CS Core', author: 'Rahul', rating: 4.9, downloads: '5k' },
-    { id: 3, title: 'Operating System Notes', subject: 'CS Core', author: 'Ankit', rating: 4.5, downloads: '800' },
-    { id: 4, title: 'Computer Networks', subject: 'CS Core', author: 'Priya', rating: 4.6, downloads: '2k' },
-    { id: 5, title: 'JavaScript Advanced Concepts', subject: 'Web Dev', author: 'Amit', rating: 4.7, downloads: '3.5k' },
-    { id: 6, title: 'Machine Learning Basics', subject: 'AI/ML', author: 'Sara', rating: 4.4, downloads: '900' },
-  ]
+  React.useEffect(() => {
+    const getNotes = async () => {
+      setIsLoading(true)
+      try {
+        const response = await fetchNotes({ search: query })
+        setAllNotes(response.data)
+      } catch (error) {
+        console.error('Error fetching notes:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    getNotes()
+  }, [query])
 
-  // Filter based on search query
-  const filteredNotes = allNotes.filter(note => 
-    note.title.toLowerCase().includes(query.toLowerCase()) ||
-    note.subject.toLowerCase().includes(query.toLowerCase())
-  )
+  const filteredNotes = allNotes; // Logic already handled by backend via query param
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

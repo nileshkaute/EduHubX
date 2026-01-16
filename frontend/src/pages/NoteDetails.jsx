@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { fetchNoteById } from '../services/noteApi'
 
 const NoteDetails = () => {
   const { id } = useParams()
@@ -7,23 +8,17 @@ const NoteDetails = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulating API fetch
-    setTimeout(() => {
-      setNote({
-        id,
-        title: id === '1' ? 'Complete ReactJS Guide 2024' : 'Technical Documentation',
-        subject: 'Web Development',
-        author: 'Nilesh Kaute',
-        rating: 4.8,
-        downloads: '1.2k',
-        pages: 45,
-        description: 'This comprehensive guide covers everything from React basics to advanced patterns like Compound Components and Render Props. It also includes sections on Hooks, Context API, and Performance Optimization.',
-        tags: ['React', 'JavaScript', 'Frontend'],
-        lastUpdated: 'Jan 10, 2024',
-        content: 'This is a preview of the note content. In a real app, this would be a PDF worker or a rendered markdown/text preview.'
-      })
-      setLoading(false)
-    }, 800)
+    const getNote = async () => {
+      try {
+        const response = await fetchNoteById(id)
+        setNote(response.data)
+      } catch (error) {
+        console.error('Error fetching note:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    getNote()
   }, [id])
 
   if (loading) {
@@ -54,7 +49,7 @@ const NoteDetails = () => {
         <div className="lg:col-span-2 space-y-8">
           <section className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
             <div className="flex flex-wrap gap-2 mb-4">
-              {note.tags.map(tag => (
+              {(note.tags || [note.subject]).map(tag => (
                 <span key={tag} className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-semibold">
                   {tag}
                 </span>
@@ -64,15 +59,15 @@ const NoteDetails = () => {
             <div className="flex items-center gap-6 text-sm text-gray-500 mb-6 pb-6 border-b border-gray-50">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-600">
-                  {note.author.charAt(0)}
+                  {note.uploadedBy?.name?.charAt(0) || 'U'}
                 </div>
-                <span>{note.author}</span>
+                <span>{note.uploadedBy?.name || 'User'}</span>
               </div>
               <div className="flex items-center gap-1 text-yellow-500">
-                ⭐ <span className="font-bold text-gray-900">{note.rating}</span>
+                ⭐ <span className="font-bold text-gray-900">{note.avgRating || 0}</span>
               </div>
-              <div>{note.pages} Pages</div>
-              <div>Updated {note.lastUpdated}</div>
+              <div>{note.pages || 'N/A'} Pages</div>
+              <div>Updated {new Date(note.createdAt).toLocaleDateString()}</div>
             </div>
 
             <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
@@ -82,9 +77,13 @@ const NoteDetails = () => {
 
             <div className="p-6 bg-gray-50 rounded-xl border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-2">Note Preview</h3>
-              <p className="text-gray-500 italic text-sm">
-                "{note.content}"
-              </p>
+              <div className="aspect-[4/5] w-64 mx-auto rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-white">
+                <img 
+                  src={note.posterUrl || "https://via.placeholder.com/300x400?text=Notes+Poster"} 
+                  alt="Note Poster" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
             </div>
           </section>
         </div>

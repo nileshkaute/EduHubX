@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import EditProfileModal from '../profile/EditProfileModal'
-import { User, FileText, LogOut, ChevronDown } from 'lucide-react'
+import { User, FileText, LogOut, ChevronDown, ShieldCheck } from 'lucide-react'
 
 const UserMenu = () => {
   const { currentUser, logout } = useAuth()
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
   if (!currentUser) {
     return (
@@ -55,28 +53,47 @@ const UserMenu = () => {
             
             <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl z-50 border border-gray-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
               <div className="px-5 py-4 bg-gray-50/50 border-b border-gray-100">
-                <p className="text-sm font-bold text-gray-900 truncate">{currentUser.name}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-bold text-gray-900 truncate">{currentUser.name}</p>
+                  {currentUser.role === 'admin' && <ShieldCheck className="w-3.5 h-3.5 text-red-600" />}
+                </div>
                 <p className="text-[11px] text-gray-500 truncate">{currentUser.email}</p>
               </div>
               
               <div className="p-2">
-                <button
-                  onClick={() => {
-                    setIsEditModalOpen(true)
-                    setIsProfileOpen(false)
-                  }}
+                {(currentUser.role === 'admin' || currentUser.role === 'Admin') && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setIsProfileOpen(false)}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 bg-red-50 text-red-700 hover:bg-red-100 rounded-xl transition-colors text-sm font-bold border border-red-100 mb-2"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    System Admin Panel
+                  </Link>
+                )}
+                <Link
+                  to="/dashboard"
+                  onClick={() => setIsProfileOpen(false)}
                   className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors text-sm font-medium"
                 >
                   <User className="w-4 h-4" />
-                  Edit Profile
-                </button>
+                  Dashboard
+                </Link>
                 <Link
-                  to="/add-note"
+                  to="/my-notes"
                   onClick={() => setIsProfileOpen(false)}
                   className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors text-sm font-medium"
                 >
                   <FileText className="w-4 h-4" />
-                  My Uploads
+                  My Notes
+                </Link>
+                <Link
+                  to="/profile"
+                  onClick={() => setIsProfileOpen(false)}
+                  className="w-full flex items-center gap-3 px-3 py-2.5 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors text-sm font-medium"
+                >
+                  <User className="w-4 h-4" />
+                  Profile Settings
                 </Link>
               </div>
 
@@ -93,11 +110,6 @@ const UserMenu = () => {
           </>
         )}
       </div>
-
-      <EditProfileModal 
-        isOpen={isEditModalOpen} 
-        onClose={() => setIsEditModalOpen(false)} 
-      />
     </div>
   )
 }

@@ -14,26 +14,27 @@ export const AuthProvider = ({ children }) => {
 
   // Helper to maintain user session
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
-        // Check expiry
-        if (decoded.exp * 1000 < Date.now()) {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const { data } = await axios.get('http://localhost:5000/api/auth/me', {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          console.log('Session sync: user role is', data.role);
+          setCurrentUser(data);
+          localStorage.setItem('user', JSON.stringify(data));
+        } catch (error) {
+          console.error("Session verification failed", error);
           localStorage.removeItem('token');
+          localStorage.removeItem('user');
           setCurrentUser(null);
-        } else {
-          // Ideally fetch fresh user data from backend, but using stored/decoded info for now
-          // We can store user info in localStorage too relative to the token
-          const storedUser = JSON.parse(localStorage.getItem('user'));
-          setCurrentUser(storedUser);
         }
-      } catch (error) {
-        localStorage.removeItem('token');
-        setCurrentUser(null);
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    };
+
+    fetchUser();
   }, []);
 
   const login = async (email, password) => {
@@ -101,6 +102,7 @@ export const AuthProvider = ({ children }) => {
 
   const value = {
     currentUser,
+    loading,
     login,
     signup,
     googleLogin,

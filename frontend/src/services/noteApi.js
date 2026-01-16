@@ -13,11 +13,12 @@ const getAuthConfig = () => {
 };
 
 export const fetchNotes = async (filters = {}) => {
-  const { subject, search } = filters;
   let url = API_URL;
   const params = new URLSearchParams();
-  if (subject) params.append("subject", subject);
-  if (search) params.append("search", search);
+
+  Object.keys(filters).forEach((key) => {
+    if (filters[key]) params.append(key, filters[key]);
+  });
 
   if (params.toString()) {
     url += `?${params.toString()}`;
@@ -45,6 +46,24 @@ export const createNote = async (formData) => {
 
 export const deleteNote = async (id) => {
   const { data } = await axios.delete(`${API_URL}/${id}`, getAuthConfig());
+  return data;
+};
+
+export const updateNote = async (id, updateData) => {
+  const { data } = await axios.put(
+    `${API_URL}/${id}`,
+    updateData,
+    getAuthConfig()
+  );
+  return data;
+};
+
+export const rateNote = async (id, rating) => {
+  const { data } = await axios.post(
+    `${API_URL}/${id}/rate`,
+    { rating },
+    getAuthConfig()
+  );
   return data;
 };
 

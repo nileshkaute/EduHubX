@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { OAuth2Client } = require("google-auth-library");
 const User = require("../models/User");
+const Note = require("../models/Note");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -47,6 +48,7 @@ const googleAuth = async (req, res) => {
       name: user.name,
       email: user.email,
       photo: user.photo,
+      role: user.role,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -90,6 +92,7 @@ const registerUser = async (req, res) => {
         _id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
         token: generateToken(user._id),
       });
     } else {
@@ -115,6 +118,7 @@ const loginUser = async (req, res) => {
         name: user.name,
         email: user.email,
         photo: user.photo,
+        role: user.role,
         token: generateToken(user._id),
       });
     } else {
@@ -152,6 +156,7 @@ const updateUserProfile = async (req, res) => {
         email: updatedUser.email,
         photo: updatedUser.photo,
         bio: updatedUser.bio,
+        role: updatedUser.role,
         education: updatedUser.education,
         token: generateToken(updatedUser._id),
       });
@@ -163,4 +168,86 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-module.exports = { googleAuth, registerUser, loginUser, updateUserProfile };
+// @desc    Get current user profile
+// @route   GET /api/auth/me
+// @access  Private
+const getMe = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+// @desc    Get dashboard stats
+// @route   GET /api/auth/stats
+// @access  Private
+const getDashboardStats = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Fetch all notes by this user
+    const notes = await Note.find({ uploadedBy: userId });
+
+    const totalUploads = notes.length;
+    const totalDownloads = notes.reduce((acc, note) => acc + note.downloads, 0);
+
+    const notesWithRatings = notes.filter((n) => n.ratingsCount > 0);
+    const avgRating =
+      notesWithRatings.length > 0
+        ? (
+            notesWithRatings.reduce((acc, note) => acc + note.avgRating, 0) /
+            notesWithRatings.length
+          ).toFixed(1)
+        : "N/A";
+
+    res.json({
+      success: true,
+      data: {
+        totalUploads,
+        totalDownloads,
+        avgRating,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+// @desc    Get admin dashboard stats
+// @route   GET /api/auth/admin/stats
+// @access  Private/Admin
+const getAdminStats = async (req, res) => {
+  try {
+    const totalUsers = await User.countDocuments();
+    const totalNotes = await Note.countDocuments();
+
+    const allNotes = await Note.find({});
+    const totalDownloads = allNotes.reduce(
+      (acc, note) => acc + note.downloads,
+      0
+    );
+
+    res.json({
+      success: true,
+      data: {
+        totalUsers,
+        totalNotes,
+        totalDownloads,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error: error.message });
+  }
+};
+
+module.exports = {
+  googleAuth,
+  registerUser,
+  loginUser,
+  updateUserProfile,
+  getDashboardStats,
+  getAdminStats,
+  getMe,
+};

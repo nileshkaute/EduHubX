@@ -1,16 +1,18 @@
 const express = require("express");
+const router = express.Router();
 const {
   getAllNotes,
   getNoteById,
   createNote,
+  updateNote,
   deleteNote,
   incrementDownloads,
+  rateNote,
 } = require("../controllers/noteController");
 
-const { protect } = require("../middleware/authMiddleware");
+const { protect, authorize } = require("../middleware/authMiddleware");
+const { isNoteOwner } = require("../middleware/ownershipMiddleware");
 const upload = require("../middleware/uploadMiddleware");
-
-const router = express.Router();
 
 router
   .route("/")
@@ -24,8 +26,13 @@ router
     createNote
   );
 
-router.route("/:id").get(getNoteById).delete(protect, deleteNote);
+router
+  .route("/:id")
+  .get(getNoteById)
+  .put(protect, authorize("admin"), updateNote)
+  .delete(protect, authorize("admin"), deleteNote);
 
 router.route("/:id/download").put(incrementDownloads);
+router.route("/:id/rate").post(protect, rateNote);
 
 module.exports = router;

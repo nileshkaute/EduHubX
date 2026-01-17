@@ -43,6 +43,19 @@ const noteSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    // Customization Fields
+    bottomColor: {
+      type: String,
+      default: "#ff5722", // Default Orange
+    },
+    titleColor: {
+      type: String,
+      default: "#1f2937", // Default Gray-900
+    },
+    textColor: {
+      type: String,
+      default: "#4b5563", // Default Gray-600
+    },
   },
   {
     timestamps: true,

@@ -2,44 +2,69 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { FileText, Download, Star } from 'lucide-react'
 
-const NoteCard = ({ _id, id, title, subject, author, uploadedBy, rating, avgRating, downloads }) => {
+const NoteCard = ({ _id, id, title, subject, author, uploadedBy, rating, avgRating, downloads, posterUrl, description, views, bottomColor, titleColor, textColor, ratingsCount }) => {
   const displayId = _id || id;
   const displayAuthor = uploadedBy?.name || author;
   const displayRating = avgRating || rating;
   
   return (
     <Link to={`/notes/${displayId}`} className="block group">
-      <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-        <div className="flex justify-between items-start mb-4">
-          <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-            <FileText className="w-6 h-6" />
-          </div>
-          <span className="bg-green-50 text-green-700 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">
-            {subject}
-          </span>
-        </div>
-
-        <h3 className="text-gray-900 font-bold text-lg mb-2 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">
-          {title}
-        </h3>
-
-        <div className="flex items-center gap-2 mb-4 text-xs text-gray-400">
-           <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center font-bold text-gray-500 uppercase overflow-hidden text-[10px]">
-             {displayAuthor?.charAt(0)}
+      <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full flex flex-col">
+        
+        {/* 1. Header Image (or Fallback Decoration) */}
+        <div className="h-40 overflow-hidden relative bg-gray-100">
+           <img 
+             src={posterUrl || "https://via.placeholder.com/400x300?text=Note+Preview"} 
+             alt={title} 
+             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+             onError={(e) => {
+               e.target.onerror = null; 
+               e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(title)}&background=random&size=400`
+             }}
+           />
+           <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-[10px] font-bold text-gray-700 shadow-sm">
+             {subject}
            </div>
-           <span>{displayAuthor}</span>
         </div>
 
-        <div className="border-t border-gray-50 pt-4 flex items-center justify-between">
-          <div className="flex items-center gap-1">
-            <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
-            <span className="text-sm font-bold text-gray-900">{displayRating}</span>
-          </div>
-          <div className="flex items-center gap-1 text-gray-400">
-             <Download className="w-3.5 h-3.5" />
-             <span className="text-xs font-medium">{downloads}</span>
+        {/* 2. Body Content */}
+        <div className="p-5 flex-grow bg-white">
+          <div className="text-center mb-2">
+             <span className="text-[10px] font-medium text-orange-500 uppercase tracking-wider">
+               1 week ago
+             </span>
+             <h3 
+               className="text-xl font-bold mt-1 mb-2 leading-snug line-clamp-2 font-serif"
+               style={{ color: titleColor || '#1f2937' }}
+             >
+               {title}
+             </h3>
+             <p 
+               className="text-xs line-clamp-3 leading-relaxed"
+               style={{ color: textColor || '#4b5563' }}
+             >
+               {description || `Detailed study notes for ${subject}. Covers key concepts, examples, and important formulas.`}
+               {/* Using description if available or fallback text */}
+             </p>
           </div>
         </div>
+
+        {/* 3. Solid Colored Footer */}
+        <div 
+          className="py-3 px-5 flex justify-between gap-3 items-center text-white"
+          style={{ backgroundColor: bottomColor || '#ff5722' }}
+        >
+          <div className="flex items-center gap-1.5">
+             <Download className="w-4 h-4" />
+             <span className="font-bold text-md">{downloads}</span>
+             <span className="text-[10px] uppercase font-medium opacity-90 ml-0.5">Downloads</span>
+          </div>
+          
+          <div className="text-white/90 hover:text-white font-semibold flex items-center gap-1 cursor-pointer transition-colors border border-white/30 px-3 py-1 rounded-full text-[10px] uppercase bg-white/10 hover:bg-white/20">
+            Download
+          </div>
+        </div>
+
       </div>
     </Link>
   )

@@ -13,7 +13,10 @@ const NoteForm = () => {
     subject: '',
     description: '',
     file: null,
-    poster: null
+    poster: null,
+    bottomColor: '#ff5722',
+    titleColor: '#1f2937',
+    textColor: '#4b5563'
   })
 
   const handleChange = (e) => {
@@ -40,6 +43,10 @@ const NoteForm = () => {
       data.append('subject', formData.subject)
       data.append('description', formData.description)
       data.append('pdf', formData.file)
+      data.append('bottomColor', formData.bottomColor)
+      data.append('titleColor', formData.titleColor)
+      data.append('textColor', formData.textColor)
+      
       if (formData.poster) {
         data.append('poster', formData.poster)
       }
@@ -136,6 +143,49 @@ const NoteForm = () => {
             </svg>
           }
         />
+      </div>
+
+      {/* Color Customization */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Bottom Bar Color</label>
+          <div className="flex items-center gap-3">
+             <input 
+               type="color" 
+               name="bottomColor" 
+               value={formData.bottomColor || '#ff5722'} 
+               onChange={handleChange}
+               className="h-10 w-20 p-1 rounded border border-gray-300 cursor-pointer"
+             />
+             <span className="text-sm text-gray-500">{formData.bottomColor || '#ff5722'}</span>
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Title Color</label>
+          <div className="flex items-center gap-3">
+             <input 
+               type="color" 
+               name="titleColor" 
+               value={formData.titleColor || '#1f2937'} 
+               onChange={handleChange}
+               className="h-10 w-20 p-1 rounded border border-gray-300 cursor-pointer"
+             />
+             <span className="text-sm text-gray-500">{formData.titleColor || '#1f2937'}</span>
+          </div>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Text Color</label>
+          <div className="flex items-center gap-3">
+             <input 
+               type="color" 
+               name="textColor" 
+               value={formData.textColor || '#4b5563'} 
+               onChange={handleChange}
+               className="h-10 w-20 p-1 rounded border border-gray-300 cursor-pointer"
+             />
+             <span className="text-sm text-gray-500">{formData.textColor || '#4b5563'}</span>
+          </div>
+        </div>
       </div>
 
       {/* Submit Button */}

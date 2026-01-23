@@ -226,7 +226,7 @@ const getAdminStats = async (req, res) => {
     const allNotes = await Note.find({});
     const totalDownloads = allNotes.reduce(
       (acc, note) => acc + note.downloads,
-      0
+      0,
     );
 
     res.json({
@@ -242,6 +242,24 @@ const getAdminStats = async (req, res) => {
   }
 };
 
+// @desc    Upload user avatar
+// @route   POST /api/auth/upload-avatar
+// @access  Private
+const uploadAvatar = (req, res) => {
+  if (req.file) {
+    // Return relative path for frontend to use (ensure server serves 'uploads' folder)
+    // The path usually comes as "uploads\posters\filename.jpg" on windows.
+    // We normalize it to forward slashes.
+    const filePath = req.file.path.replace(/\\/g, "/");
+    // Assuming backend runs on port 5000 and serves static files from root
+    // The previous code showed app.use("/uploads", express.static("uploads"));
+    // So we just need to return the path relative to domain root, e.g., "uploads/..."
+    res.json({ url: filePath });
+  } else {
+    res.status(400).json({ message: "No file uploaded" });
+  }
+};
+
 module.exports = {
   googleAuth,
   registerUser,
@@ -250,4 +268,5 @@ module.exports = {
   getDashboardStats,
   getAdminStats,
   getMe,
+  uploadAvatar,
 };

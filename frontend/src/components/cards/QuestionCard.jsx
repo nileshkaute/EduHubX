@@ -8,7 +8,7 @@ const QuestionCard = ({ question, topic, difficulty, answers }) => {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border-l-4 border-blue-500 p-5">
+    <div className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border-l-4 border-blue-500 p-5 border border-gray-100">
       <div className="flex justify-between items-center mb-3">
         <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{topic}</span>
         <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${difficultyColor[difficulty] || 'bg-gray-100 text-gray-800'}`}>

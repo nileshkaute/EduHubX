@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
 import { X, Camera } from 'lucide-react'
+import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const EditProfileModal = ({ isOpen, onClose }) => {
   const { currentUser, updateProfile } = useAuth()
   const [loading, setLoading] = useState(false)
+  const [imageFile, setImageFile] = useState(null)
   const [formData, setFormData] = useState({
     name: '',
     bio: '',
@@ -31,8 +34,8 @@ const EditProfileModal = ({ isOpen, onClose }) => {
   const handleImageChange = (e) => {
     const file = e.target.files[0]
     if (file) {
-      // For now, we simulate a local preview. 
-      // In a real app, you would upload to Cloudinary/S3 and get a URL.
+      setImageFile(file)
+      // Preview
       const reader = new FileReader()
       reader.onloadend = () => {
         setFormData(prev => ({ ...prev, photo: reader.result }))
@@ -45,10 +48,32 @@ const EditProfileModal = ({ isOpen, onClose }) => {
     e.preventDefault()
     setLoading(true)
     try {
-      await updateProfile(formData)
+      let photoUrl = formData.photo
+
+      if (imageFile) {
+        const uploadFormData = new FormData()
+        uploadFormData.append('poster', imageFile)
+        
+        const token = localStorage.getItem('token')
+        const { data } = await axios.post('http://localhost:5000/api/auth/upload-avatar', uploadFormData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`
+          }
+        })
+        // Construct full URL if needed, or backend returns usable path
+        // Assuming backend returns relative path "uploads/..." and we prepend base URL for display usually
+        // But for saving in DB, we'll save the returned path or full URL. 
+        // Let's save the full URL to be consistent with Google Auth photos
+        photoUrl = `http://localhost:5000/${data.url}`
+      }
+
+      await updateProfile({ ...formData, photo: photoUrl })
+      toast.success('Profile updated successfully!')
       onClose()
     } catch (error) {
-      alert(error.message)
+      console.error(error)
+      toast.error(error.message || 'Failed to update profile')
     } finally {
       setLoading(false)
     }

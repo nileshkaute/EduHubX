@@ -2,9 +2,9 @@ import React from 'react'
 
 const RoadmapCard = ({ title, description, steps, colorFrom = 'from-purple-500', colorTo = 'to-blue-500' }) => {
   return (
-    <div className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+    <div className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 bg-white">
       <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${colorFrom} ${colorTo}`}></div>
-      <div className="bg-white p-5 h-full flex flex-col">
+      <div className="p-5 h-full flex flex-col">
         <div className="mb-3">
           <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${colorFrom} ${colorTo} flex items-center justify-center text-white mb-3 shadow-sm`}>
              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
